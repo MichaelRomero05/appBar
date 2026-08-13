@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+=================================================================================
+ PAGINA: index.html
+=================================================================================
+ Esta es la PRIMERA pagina que se abre cuando alguien entra a
+ http://localhost:8080 (o a tu dominio en internet). Solo muestra dos
+ botones grandes para elegir si entras como Cliente o como Administrador.
+
+ Si prefieres que los clientes caigan DIRECTO en el login de cliente (sin
+ ver esta pantalla intermedia), puedes borrar este archivo y renombrar
+ "cliente-login.html" a "index.html".
+=================================================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Music App</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="pantalla-login">
+        <div class="tarjeta-login">
+            <img class="logo-bar" src="img/logo-bar.png" alt="Logo del bar" onerror="this.style.display='none'">
+            <h1>Bar Music App</h1>
+            <a href="cliente-login.html" class="boton boton-primario boton-bloque">Entrar como Cliente</a>
+            <a href="admin-login.html" class="boton boton-secundario boton-bloque">Entrar como Administrador</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ============================================================================
+   ARCHIVO pom.xml
+  ============================================================================
+   ¿QUE ES ESTO? Es la "lista de compras" del proyecto Java. Le dice a Maven
+   (el programa que compila y descarga librerias) QUE librerias necesita
+   nuestra aplicacion para funcionar (Spring Boot, conector de MySQL, etc).
+
+   NO TIENES QUE ENTENDER TODO ESTE ARCHIVO. Solo sabe que:
+   - Aqui se agregan "dependencias" (paquetes de codigo ya hechos por otros).
+   - Si en el futuro necesitas una libreria nueva, se agrega aqui dentro
+     de la etiqueta <dependencies>.
+  ============================================================================
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- "Padre" del proyecto: nos da toda la configuracion base de Spring Boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
+        <relativePath/>
+    </parent>
+
+    <!-- Datos identificadores de NUESTRO proyecto -->
+    <groupId>com.barmusic</groupId>
+    <artifactId>barmusic-app</artifactId>
+    <version>1.0.0</version>
+    <name>barmusic-app</name>
+    <description>App web para solicitar canciones en un bar</description>
+
+    <properties>
+        <java.version>21</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- Nos permite crear controladores REST (endpoints /api/...) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Nos permite hablar con la base de datos usando "objetos Java"
+             en vez de escribir SQL a mano en cada consulta (JPA / Hibernate) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Conector oficial para hablar con bases de datos MySQL -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Validaciones automaticas de formularios (@NotNull, @Email, etc) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Encriptador de contraseñas (BCrypt). Lo usamos SIN activar todo
+             el modulo de seguridad de Spring, solo para tener la clase de
+             encriptado disponible de forma sencilla. -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+
+        <!-- Libreria ZXing: genera las imagenes de codigo QR -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.5.3</version>
+        </dependency>
+
+        <!-- Herramientas para pruebas automaticas (opcional, buena practica) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>barmusic-app</finalName>
+        <plugins>
+            <!-- Este plugin es el que permite ejecutar la app con
+                 "mvn spring-boot:run" y tambien empaquetarla como un .jar
+                 ejecutable con "mvn clean package" -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
