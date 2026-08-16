@@ -146,8 +146,8 @@ input:focus, textarea:focus {
 }
 .boton:active { transform: scale(0.97); }
 
-.boton-primario   { background: var(--color-primario); color: var(--color-texto-claro); }
-.boton-secundario { background: var(--color-secundario); color: var(--color-texto-claro); }
+.boton-primario   { background: linear-gradient(135deg, var(--acento-rosa), var(--acento-naranja)); }
+.boton-secundario { background: linear-gradient(135deg, var(--acento-rosasuave), var(--acento-naranjasuave)); }
 .boton-exito      { background: var(--color-acento); color: var(--color-texto-claro); }
 .boton-peligro     { background: var(--color-peligro); color: var(--color-texto-claro); }
 .boton-bloque     { width: 100%; }

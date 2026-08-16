@@ -24,7 +24,9 @@
     --fondo-oscuro-1: #1a1030;      /* Morado muy oscuro (esquina superior) */
     --fondo-oscuro-2: #120c22;      /* Casi negro azulado (base del fondo) */
     --acento-rosa: #ec4899;         /* Rosa/fucsia (boton principal, brillo) */
+    --acento-rosasuave: #d17ca6;         /* Rosa/fucsia (boton principal, brillo) */
     --acento-naranja: #f59e0b;      /* Naranja (parte del degradado del boton) */
+    --acento-naranjasuave: #dcb674;      /* Naranja (parte del degradado del boton) */
     --acento-teal: #2dd4bf;         /* Verde azulado (boton QR, ecualizador) */
     --texto-claro: #f5f3ff;         /* Texto principal sobre fondo oscuro */
     --texto-tenue: #b9b3d1;         /* Texto secundario/subtitulos */

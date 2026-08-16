@@ -24,7 +24,9 @@
     --fondo-oscuro-1: #1a1030;      /* Morado muy oscuro (esquina superior) */
     --fondo-oscuro-2: #120c22;      /* Casi negro azulado (base del fondo) */
     --acento-rosa: #ec4899;         /* Rosa/fucsia (boton principal, brillo) */
+    --acento-rosasuave: #d17ca6;         /* Rosa/fucsia (boton principal, brillo) */
     --acento-naranja: #f59e0b;      /* Naranja (parte del degradado del boton) */
+    --acento-naranjasuave: #dcb674;      /* Naranja (parte del degradado del boton) */
     --acento-teal: #2dd4bf;         /* Verde azulado (boton QR, ecualizador) */
     --texto-claro: #f5f3ff;         /* Texto principal sobre fondo oscuro */
     --texto-tenue: #b9b3d1;         /* Texto secundario/subtitulos */
@@ -69,7 +71,7 @@
 /* Contenedor que le da el "brillo" difuminado detras del disco */
 .vinilo-contenedor {
     position: relative;
-    width: min(320px, 70vw);
+    width: min(300px, 80vw);
     aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
@@ -89,8 +91,8 @@
 .vinilo {
     position: relative;
     z-index: 1;
-    width: 1%;
-    height: 1%;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     background:
         repeating-radial-gradient(
@@ -110,8 +112,8 @@
 
 /* La etiqueta central del vinilo = tu logo-bar.png. Se recorta en circulo. */
 .vinilo-etiqueta {
-    width: 42%;
-    height: 42%;
+    width: 50%;
+    height: 50%;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid rgba(255, 255, 255, 0.15);
