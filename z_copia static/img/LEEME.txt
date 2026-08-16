@@ -1,4 +1,0 @@
-Coloca aqui el logo de tu bar con el nombre exacto: logo-bar.png
-Tamaño recomendado: 600x300 pixeles aprox (formato PNG con fondo transparente
-o negro, igual que en el mockup original).
-Si no colocas ninguna imagen, el logo simplemente no se muestra (no rompe la pagina).

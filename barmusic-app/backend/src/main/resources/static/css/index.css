@@ -69,7 +69,7 @@
 /* Contenedor que le da el "brillo" difuminado detras del disco */
 .vinilo-contenedor {
     position: relative;
-    width: min(320px, 70vw);
+    width: min(300px, 80vw);
     aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
@@ -110,8 +110,8 @@
 
 /* La etiqueta central del vinilo = tu logo-bar.png. Se recorta en circulo. */
 .vinilo-etiqueta {
-    width: 42%;
-    height: 42%;
+    width: 50%;
+    height: 50%;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid rgba(255, 255, 255, 0.15);
