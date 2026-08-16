@@ -13,7 +13,6 @@
 // Cuando publiques la app en internet de verdad, cambia esta linea por la
 // URL real de tu servidor, por ejemplo:
 //     const API_BASE_URL = "https://api.mibar.com";
-// const API_BASE_URL = "http://localhost:8080";
 const API_BASE_URL = "http://localhost:8080";
 
 /**
