@@ -1,0 +1,15 @@
+Coloca aqui el logo de tu bar con el nombre exacto: logo-bar.png
+
+IMPORTANTE (desde el nuevo esquema con el vinilo giratorio):
+Esta imagen ahora se muestra como la ETIQUETA CENTRAL de un disco de
+vinilo animado en la pantalla de login (index.html), y se recorta
+automaticamente en forma de circulo.
+
+Recomendaciones para que se vea bien:
+- Usa una imagen CUADRADA (mismo ancho y alto), ej: 500x500 pixeles.
+- Evita que el logo tenga texto/detalles importantes muy pegados a las
+  esquinas, porque el recorte circular los corta.
+- Funciona bien tanto con fondo transparente como con fondo solido.
+
+Si no colocas ninguna imagen, el espacio simplemente queda vacio dentro
+del vinilo (no rompe la pagina).

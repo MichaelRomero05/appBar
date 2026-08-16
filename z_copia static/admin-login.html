@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+=================================================================================
+ PAGINA: admin-login.html (Mockup paginas 7 y 8: "Vista Usuario Administrador")
+=================================================================================
+ Es practicamente identica a cliente-login.html, pero al validar el login,
+ el JS revisa que el "rol" del usuario sea ADMINISTRADOR (ver admin-login.js).
+=================================================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Music App - Administrador</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="pantalla-login">
+        <div class="tarjeta-login">
+            <img id="logoBar" class="logo-bar" src="img/logo-bar.png"
+                 alt="Logo del bar" onerror="this.style.display='none'">
+
+            <h1>Inicio de Sesión</h1>
+
+            <div id="mensajeError" class="mensaje error" style="display:none;"></div>
+
+            <div>
+                <label for="inputUsuario">Usuario</label>
+                <input type="text" id="inputUsuario" placeholder="correo@correo.com" autocomplete="username">
+            </div>
+
+            <div>
+                <label for="inputContrasena">Contraseña</label>
+                <input type="password" id="inputContrasena" placeholder="••••••••" autocomplete="current-password">
+            </div>
+
+            <button id="botonIngresar" class="boton boton-primario boton-bloque">Ingresar</button>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/admin-login.js"></script>
+</body>
+</html>
