@@ -1,32 +1,90 @@
 <!DOCTYPE html>
 <!--
 =================================================================================
- PAGINA: index.html
+ PAGINA: index.html  (PANTALLA UNICA DE LOGIN - Cliente y Administrador)
 =================================================================================
- Esta es la PRIMERA pagina que se abre cuando alguien entra a
- http://localhost:8080 (o a tu dominio en internet). Solo muestra dos
- botones grandes para elegir si entras como Cliente o como Administrador.
+ QUE CAMBIO AQUI:
+ Antes existian 3 pantallas para llegar al login (index -> elegir rol ->
+ cliente-login.html o admin-login.html). Ahora TODO pasa por aqui: la
+ persona escribe usuario/clave (o escanea el QR de su mesa) UNA sola vez,
+ y el propio backend le dice si es CLIENTE o ADMINISTRADOR (campo "rol"
+ que ya devuelve /api/auth/login). El JavaScript (js/index.js) usa ese
+ dato para mandarla automaticamente a la pantalla correcta.
 
- Si prefieres que los clientes caigan DIRECTO en el login de cliente (sin
- ver esta pantalla intermedia), puedes borrar este archivo y renombrar
- "cliente-login.html" a "index.html".
+ COMO CAMBIAR EL NOMBRE DEL BAR:
+ Busca el texto "Break Times Pub" AQUI ABAJO (aparece 2 veces: en el
+ "eyebrow" de la tarjeta y en la frase del panel izquierdo) y reemplazalo.
+
+ COMO CAMBIAR EL LOGO/ETIQUETA DEL VINILO:
+ Reemplaza el archivo img/logo-bar.png por tu imagen. Se ve mejor si es
+ una imagen CUADRADA (se recorta automaticamente en circulo).
 =================================================================================
 -->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bar Music App</title>
+    <title>Break Times Pub - Pide tu canción</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <div class="pantalla-login">
-        <div class="tarjeta-login">
-            <img class="logo-bar" src="img/logo-bar.png" alt="Logo del bar" onerror="this.style.display='none'">
-            <h1>Bar Music App</h1>
-            <a href="cliente-login.html" class="boton boton-primario boton-bloque">Entrar como Cliente</a>
-            <a href="admin-login.html" class="boton boton-secundario boton-bloque">Entrar como Administrador</a>
+    <div class="pantalla-bienvenida">
+
+        <!-- ============== PANEL IZQUIERDO: VINILO GIRANDO ============== -->
+        <div class="panel-visual">
+            <div class="vinilo-contenedor">
+                <div class="vinilo">
+                    <!-- Esta imagen ES la etiqueta del vinilo. Gira junto
+                         con el disco porque esta DENTRO del div ".vinilo",
+                         que es el que tiene la animacion de giro (ver index.css) -->
+                    <img id="logoBar" class="vinilo-etiqueta"  src="img/logo-bar.png"
+                         alt="Logo del bar" onerror="this.style.display='none'">
+                </div>
+            </div>
+
+            <!-- Ecualizador decorativo (barras animadas) -->
+            <div class="ecualizador">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <p class="panel-visual-texto">
+                <strong>Break Times Pub</strong> — pide la próxima canción sin levantarte de la silla.
+            </p>
+        </div>
+
+        <!-- ============== PANEL DERECHO: FORMULARIO DE LOGIN ============== -->
+        <div class="panel-login">
+            <div class="tarjeta-login-nueva">
+                <p class="eyebrow">Break Times Pub</p>
+                <h1>Pide tu canción</h1>
+                <p class="subtitulo-login">Inicia sesión desde tu mesa y elige lo que sonará después.</p>
+
+                <!-- Mensaje de error (login fallido, QR invalido, etc) -->
+                <div id="mensajeError" class="mensaje error" style="display:none;"></div>
+
+                <label for="inputUsuario">Mesa o usuario</label>
+                <input type="text" id="inputUsuario" placeholder="Usuario" autocomplete="username">
+
+                <label for="inputContrasena">Contraseña</label>
+                <input type="password" id="inputContrasena" placeholder="••••••••" autocomplete="current-password">
+
+                <button id="botonIngresar" class="boton-degradado">Ingresar</button>
+
+                <div class="separador-o-oscuro">o</div>
+
+                <button id="botonQr" class="boton-qr-nuevo">
+                    <!-- Icono QR en SVG, no depende de ninguna imagen externa -->
+                    <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2zm4 0h2v2h-2zm-4 4h2v2h-2zm4 0h2v2h-2zm-2-2h2v2h-2z"/></svg>
+                    Escanear el QR de tu mesa
+                </button>
+
+                <p class="hint-qr">Cada mesa tiene su propio código QR de acceso rápido.</p>
+            </div>
         </div>
     </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

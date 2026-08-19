@@ -9,8 +9,18 @@ const mensajeEstado = document.getElementById("mensajeEstado");
 const botonVolver = document.getElementById("botonVolver");
 
 botonVolver.addEventListener("click", () => {
-    window.location.href = "cliente-login.html";
+    window.location.href = "index.html";
 });
+
+// Manda al usuario a la pantalla correcta segun su rol (igual que en
+// index.js) - por si algun dia un administrador tambien usa QR.
+function redirigirSegunRol(usuario) {
+    if (usuario.rol === "ADMINISTRADOR") {
+        window.location.href = "admin-app.html";
+    } else {
+        window.location.href = "cliente-app.html";
+    }
+}
 
 // Creamos el "lector" y le decimos en que elemento HTML debe dibujar la camara
 const lector = new Html5Qrcode("lectorQr");
@@ -45,7 +55,7 @@ lector.start(
             });
 
             guardarSesion(usuario);
-            window.location.href = "cliente-app.html";
+            redirigirSegunRol(usuario);
         } catch (error) {
             mensajeEstado.textContent = "Código QR inválido: " + error.message;
             mensajeEstado.className = "mensaje error";

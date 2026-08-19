@@ -1,0 +1,322 @@
+/* ============================================================================
+   ARCHIVO: index.css
+   ============================================================================
+   Estilos EXCLUSIVOS de la pantalla de bienvenida/login unica (index.html).
+   Es un archivo aparte de styles.css a proposito: asi el resto de la app
+   (catalogo, panel admin, etc.) sigue con su estilo actual sin verse
+   afectado, y este esquema oscuro con el vinilo queda contenido solo aqui.
+
+   -----------------------------------------------------------------------
+   COMO CAMBIAR EL NOMBRE DEL BAR:
+      No lo cambies aqui (esto es CSS, solo colores/tamaños). Busca el
+      texto "Break Times Pub" directamente en index.html (aparece 2 veces).
+   -----------------------------------------------------------------------
+   COMO CAMBIAR LOS COLORES DEL DEGRADADO:
+      Modifica las variables dentro de ":root" mas abajo.
+   -----------------------------------------------------------------------
+   COMO CAMBIAR LA VELOCIDAD DE GIRO DEL VINILO:
+      Busca ".vinilo { animation: girar 6s linear infinite; }" mas abajo
+      y cambia el "6s" (mientras MAS alto el numero, MAS LENTO gira).
+   ============================================================================ */
+
+:root {
+    /* ---- PALETA DEL ESQUEMA OSCURO ---- */
+    --fondo-oscuro-1: #1a1030;      /* Morado muy oscuro (esquina superior) */
+    --fondo-oscuro-2: #120c22;      /* Casi negro azulado (base del fondo) */
+    --acento-rosa: #ec4899;         /* Rosa/fucsia (boton principal, brillo) */
+    --acento-rosasuave: #d17ca6;         /* Rosa/fucsia (boton principal, brillo) */
+    --acento-naranja: #f59e0b;      /* Naranja (parte del degradado del boton) */
+    --acento-naranjasuave: #dcb674;      /* Naranja (parte del degradado del boton) */
+    --acento-teal: #2dd4bf;         /* Verde azulado (boton QR, ecualizador) */
+    --texto-claro: #f5f3ff;         /* Texto principal sobre fondo oscuro */
+    --texto-tenue: #b9b3d1;         /* Texto secundario/subtitulos */
+    --panel-cristal: rgba(255, 255, 255, 0.06); /* "Vidrio" translucido de la tarjeta */
+    --borde-cristal: rgba(255, 255, 255, 0.14);
+}
+
+/* ============================================================================
+   FONDO GENERAL DE LA PANTALLA
+   ============================================================================
+   Combinamos un degradado base oscuro + dos "manchas" de luz (radial-gradient)
+   en rosa y teal para simular el ambiente de neón del mockup.
+   ============================================================================ */
+.pantalla-bienvenida {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;          /* En celular, los 2 paneles se apilan uno debajo del otro */
+    background:
+        radial-gradient(circle at 15% 20%, rgba(236, 72, 153, 0.25), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(45, 212, 191, 0.18), transparent 45%),
+        linear-gradient(135deg, var(--fondo-oscuro-1), var(--fondo-oscuro-2));
+    color: var(--texto-claro);
+    font-family: var(--fuente-principal, 'Segoe UI', Arial, sans-serif);
+}
+
+/* ============================================================================
+   PANEL IZQUIERDO: el vinilo girando + ecualizador + frase
+   ============================================================================ */
+.panel-visual {
+    flex: 1 1 420px;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+    gap: 28px;
+    text-align: center;
+}
+
+/* Contenedor que le da el "brillo" difuminado detras del disco */
+.vinilo-contenedor {
+    position: relative;
+    width: min(300px, 80vw);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.vinilo-contenedor::before {
+    content: "";
+    position: absolute;
+    inset: -30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.35), transparent 70%);
+    filter: blur(20px);
+    z-index: 0;
+}
+
+/* El disco de vinilo en si: anillos concentricos simulados con gradientes */
+.vinilo {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background:
+        repeating-radial-gradient(
+            circle,
+            #050505 0px,
+            #050505 2px,
+            #1c1c1c 3px,
+            #1c1c1c 5px
+        );
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* ESTA LINEA es la que hace que el vinilo gire sin parar */
+    animation: girar 6s linear infinite;
+}
+
+/* La etiqueta central del vinilo = tu logo-bar.png. Se recorta en circulo. */
+.vinilo-etiqueta {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, var(--acento-rosa), var(--acento-naranja));
+}
+
+/* El "huequito" del centro del disco, como un vinilo real */
+.vinilo::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #050505;
+    border: 2px solid #444;
+}
+
+/* Animacion de giro: 0 a 360 grados en bucle infinito */
+@keyframes girar {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* Si el usuario tiene activado "reducir movimiento" en su sistema
+   operativo (accesibilidad), respetamos esa preferencia y detenemos el giro. */
+@media (prefers-reduced-motion: reduce) {
+    .vinilo { animation: none; }
+}
+
+/* ---- Ecualizador decorativo (barritas que suben y bajan) ---- */
+.ecualizador {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 34px;
+}
+.ecualizador span {
+    display: block;
+    width: 5px;
+    border-radius: 3px;
+    background: var(--acento-teal);
+    animation: rebotar 1s ease-in-out infinite;
+}
+.ecualizador span:nth-child(1) { background: var(--acento-teal);   height: 60%; animation-delay: 0s;    }
+.ecualizador span:nth-child(2) { background: var(--acento-rosa);   height: 100%; animation-delay: 0.15s; }
+.ecualizador span:nth-child(3) { background: var(--acento-naranja);height: 45%; animation-delay: 0.3s;  }
+.ecualizador span:nth-child(4) { background: var(--acento-rosa);   height: 85%; animation-delay: 0.45s; }
+.ecualizador span:nth-child(5) { background: var(--acento-teal);   height: 55%; animation-delay: 0.6s;  }
+
+@keyframes rebotar {
+    0%, 100% { transform: scaleY(0.4); }
+    50%      { transform: scaleY(1); }
+}
+
+.panel-visual-texto {
+    max-width: 360px;
+    color: var(--texto-tenue);
+    line-height: 1.5;
+}
+.panel-visual-texto strong {
+    color: var(--texto-claro);
+}
+
+/* ============================================================================
+   PANEL DERECHO: la tarjeta de login "de cristal"
+   ============================================================================ */
+.panel-login {
+    flex: 1 1 420px;
+    min-width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+}
+
+.tarjeta-login-nueva {
+    width: 100%;
+    max-width: 400px;
+    background: var(--panel-cristal);
+    border: 1px solid var(--borde-cristal);
+    border-radius: 20px;
+    padding: 36px 32px;
+    /* "backdrop-filter" difumina lo que hay DETRAS de la tarjeta, dando el
+       efecto de vidrio esmerilado que se ve en el mockup */
+    backdrop-filter: blur(14px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--acento-naranja);
+    margin-bottom: 6px;
+}
+
+.tarjeta-login-nueva h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    line-height: 1.15;
+}
+
+.subtitulo-login {
+    color: var(--texto-tenue);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.tarjeta-login-nueva label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--texto-tenue);
+    margin-bottom: 6px;
+    margin-top: 16px;
+}
+
+.tarjeta-login-nueva input {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--borde-cristal);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--texto-claro);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.15s ease-in-out;
+}
+.tarjeta-login-nueva input::placeholder { color: rgba(245, 243, 255, 0.35); }
+.tarjeta-login-nueva input:focus { border-color: var(--acento-rosa); }
+
+/* Boton principal con degradado rosa -> naranja, igual al mockup */
+.boton-degradado {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1030;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--acento-rosa), var(--acento-naranja));
+    transition: transform 0.08s ease-in-out, opacity 0.15s;
+}
+.boton-degradado:active { transform: scale(0.98); }
+
+.separador-o-oscuro {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--texto-tenue);
+    font-size: 0.85rem;
+    margin: 20px 0;
+}
+.separador-o-oscuro::before, .separador-o-oscuro::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--borde-cristal);
+}
+
+/* Boton secundario "outline" (borde teal, fondo transparente) para el QR */
+.boton-qr-nuevo {
+    width: 100%;
+    padding: 13px;
+    border-radius: 12px;
+    border: 1.5px solid var(--acento-teal);
+    background: rgba(45, 212, 191, 0.08);
+    color: var(--acento-teal);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.15s ease-in-out;
+}
+.boton-qr-nuevo:hover { background: rgba(45, 212, 191, 0.18); }
+.boton-qr-nuevo svg { width: 18px; height: 18px; fill: var(--acento-teal); }
+
+.hint-qr {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texto-tenue);
+    margin-top: 12px;
+}
+
+/* Reutilizamos la clase .mensaje.error de styles.css, pero la adaptamos
+   para que se vea bien sobre el fondo oscuro */
+.pantalla-bienvenida .mensaje.error {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    margin-top: 16px;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+@media (max-width: 700px) {
+    .panel-visual { padding: 32px 20px 8px; }
+    .panel-login { padding: 20px; }
+    .tarjeta-login-nueva { padding: 28px 22px; }
+}

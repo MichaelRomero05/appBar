@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+=================================================================================
+ PAGINA: cliente-app.html
+ (Une las paginas 4, 5 y 6 del mockup: Catalogo / Mis Solicitudes / Notificaciones)
+=================================================================================
+ POR QUE UNA SOLA PAGINA CON PESTAÑAS EN VEZ DE 3 PAGINAS SEPARADAS:
+ Para que cambiar de seccion sea INSTANTANEO (sin recargar toda la pagina)
+ y para no repetir 3 veces el codigo de "verificar que el cliente inicio
+ sesion". Cada pestaña simplemente MUESTRA/OCULTA un bloque <section> con
+ JavaScript (ver js/cliente-app.js).
+=================================================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Music App - Cliente</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="contenedor">
+
+        <!-- ============== BARRA DE PESTAÑAS SUPERIOR ============== -->
+        <div class="barra-pestanas">
+            <button class="pestana activa" data-tab="tabSolicitar">Solicitar Canción</button>
+            <button class="pestana" data-tab="tabSolicitadas">Canciones Solicitadas</button>
+            <button id="botonCampana" class="boton-campana" data-tab="tabNotificaciones">
+                <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                <span id="badgeNotificaciones" class="badge-notificacion" style="display:none;">!</span>
+            </button>
+        </div>
+
+        <div id="mensajeGeneral" class="mensaje error" style="display:none;"></div>
+
+        <!-- ============== SECCION 1: SOLICITAR CANCION (Pagina 4) ============== -->
+        <section id="tabSolicitar">
+            <div class="caja-busqueda">
+                <input type="text" id="inputBuscar" placeholder="Indique nombre de canción o artista...">
+                <button class="boton-buscar" title="Buscar">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+                </button>
+            </div>
+            <div id="listaCatalogo" class="lista">
+                <p>Cargando catálogo...</p>
+            </div>
+        </section>
+
+        <!-- ============== SECCION 2: MIS SOLICITUDES (Pagina 5) ============== -->
+        <section id="tabSolicitadas" style="display:none;">
+            <div id="listaSolicitudes" class="lista">
+                <p>Cargando tus solicitudes...</p>
+            </div>
+        </section>
+
+        <!-- ============== SECCION 3: NOTIFICACIONES (Pagina 6) ============== -->
+        <section id="tabNotificaciones" style="display:none;">
+            <div id="listaNotificaciones" class="lista">
+                <p>Cargando notificaciones...</p>
+            </div>
+        </section>
+
+        <button id="botonCerrarSesion" class="boton boton-secundario boton-bloque" style="margin-top:24px;">
+            Cerrar sesión
+        </button>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/cliente-app.js"></script>
+</body>
+</html>

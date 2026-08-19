@@ -9,7 +9,7 @@
 
 // PASO 1: Verificamos que haya una sesion de CLIENTE valida. Si no, se
 // redirige automaticamente al login (ver funcion en config.js).
-const usuario = protegerPagina("CLIENTE", "cliente-login.html");
+const usuario = protegerPagina("CLIENTE", "index.html");
 
 // Referencias a elementos del HTML
 const botonesPestana = document.querySelectorAll(".pestana, .boton-campana");
@@ -180,7 +180,7 @@ function escaparTexto(texto) {
 
 document.getElementById("botonCerrarSesion").addEventListener("click", () => {
     cerrarSesion();
-    window.location.href = "cliente-login.html";
+    window.location.href = "index.html";
 });
 
 // Al cargar la pagina por primera vez, mostramos el catalogo

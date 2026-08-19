@@ -6,7 +6,7 @@
    2) Ver notificaciones enviadas y crear una nueva (texto y/o imagen).
    ============================================================================ */
 
-const usuario = protegerPagina("ADMINISTRADOR", "admin-login.html");
+const usuario = protegerPagina("ADMINISTRADOR", "index.html");
 
 const botonesPestana = document.querySelectorAll(".pestana");
 const secciones = {
@@ -163,7 +163,7 @@ function escaparTexto(texto) {
 
 document.getElementById("botonCerrarSesion").addEventListener("click", () => {
     cerrarSesion();
-    window.location.href = "admin-login.html";
+    window.location.href = "index.html";
 });
 
 // Al cargar la pagina, mostramos primero la gestion de solicitudes
