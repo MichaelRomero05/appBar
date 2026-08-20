@@ -37,6 +37,15 @@ public class NotificacionController {
         return notificacionService.listarTodas();
     }
 
+    // DELETE /api/notificaciones/12 -> Pagina 9/10: el admin borra un aviso
+    // (boton de basurita). Devuelve 204 (No Content): la operacion salio
+    // bien pero no hay ningun dato que devolver de vuelta.
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
+        notificacionService.eliminar(id);
+        return ResponseEntity.noContent().build();
+    }
+
     // POST /api/notificaciones (multipart/form-data con campos "texto" e "imagen")
     // Pagina 10/11: el administrador crea un aviso nuevo.
     @PostMapping(consumes = "multipart/form-data")

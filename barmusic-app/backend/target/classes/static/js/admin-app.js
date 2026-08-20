@@ -135,13 +135,39 @@ async function cargarNotificacionesAdmin() {
 
         contenedor.innerHTML = notificaciones.map((n) => `
             <div class="tarjeta-notificacion">
-                ${n.texto ? `<h3>${escaparTexto(n.texto)}</h3>` : ""}
-                ${n.rutaImagen ? `<img src="${API_BASE_URL}${n.rutaImagen}" alt="Imagen de la notificación">` : ""}
-                <div class="fecha">${formatearFecha(n.fechaCreacion)}</div>
+                <div class="tarjeta-notificacion-encabezado">
+                    <div class="tarjeta-notificacion-contenido">
+                        ${n.texto ? `<h3>${escaparTexto(n.texto)}</h3>` : ""}
+                        ${n.rutaImagen ? `<img src="${API_BASE_URL}${n.rutaImagen}" alt="Imagen de la notificación">` : ""}
+                        <div class="fecha">${formatearFecha(n.fechaCreacion)}</div>
+                    </div>
+                    <button class="boton-icono basurita" onclick="eliminarNotificacion(${n.id})" title="Eliminar notificación">
+                        <!-- Icono de basurita en SVG, no depende de ninguna libreria externa -->
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+                            <path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2zM4 5h16v2H4V5z"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         `).join("");
     } catch (error) {
         contenedor.innerHTML = `<p class="mensaje error">${error.message}</p>`;
+    }
+}
+
+/**
+ * Elimina una notificacion (boton de basurita). Pide confirmacion antes de
+ * borrar, porque es una accion irreversible - no hay forma de "deshacer".
+ */
+async function eliminarNotificacion(id) {
+    const confirmar = window.confirm("¿Seguro que quieres eliminar esta notificación? Esta acción no se puede deshacer.");
+    if (!confirmar) return;
+
+    try {
+        await apiFetch(`/api/notificaciones/${id}`, { method: "DELETE" });
+        cargarNotificacionesAdmin(); // Refrescamos la lista despues de borrar
+    } catch (error) {
+        mostrarMensaje(error.message, "error");
     }
 }
 

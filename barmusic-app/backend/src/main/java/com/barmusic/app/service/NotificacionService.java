@@ -46,6 +46,39 @@ public class NotificacionService {
     }
 
     /**
+     * PAGINA 10/11 (Admin): borra una notificacion.
+     * Ademas de borrar el registro de la base de datos, si la notificacion
+     * tenia una imagen asociada, tambien la borramos del disco - si no,
+     * quedarian archivos "huerfanos" ocupando espacio para siempre.
+     */
+    public void eliminar(Integer id) {
+        Notificacion notificacion = notificacionRepository.findById(id)
+                .orElseThrow(() -> new java.util.NoSuchElementException("La notificacion no existe"));
+
+        if (notificacion.getRutaImagen() != null && !notificacion.getRutaImagen().isBlank()) {
+            borrarImagenDelDisco(notificacion.getRutaImagen());
+        }
+
+        notificacionRepository.delete(notificacion);
+    }
+
+    /**
+     * Convierte la ruta PUBLICA guardada en la base de datos (ej:
+     * "/uploads/notificaciones/abc123.png") de vuelta a la ruta FISICA en
+     * el disco, y borra ese archivo. Si el archivo ya no existe por
+     * cualquier motivo, simplemente lo ignoramos (no es un error grave).
+     */
+    private void borrarImagenDelDisco(String rutaPublica) {
+        try {
+            String nombreArchivo = rutaPublica.substring(rutaPublica.lastIndexOf("/") + 1);
+            Path archivo = Paths.get(carpetaUploads).resolve(nombreArchivo);
+            Files.deleteIfExists(archivo);
+        } catch (Exception e) {
+            System.out.println("[NotificacionService] No se pudo borrar la imagen del disco: " + e.getMessage());
+        }
+    }
+
+    /**
      * Crea una notificacion nueva. El parametro "imagen" puede ser null si
      * el administrador solo quiso mandar texto (ver mockup pagina 10 y 11:
      * "solo texto o cargando una imagen").
