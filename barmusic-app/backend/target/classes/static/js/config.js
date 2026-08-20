@@ -13,14 +13,30 @@
 // Cuando publiques la app en internet de verdad, cambia esta linea por la
 // URL real de tu servidor, por ejemplo:
 //     const API_BASE_URL = "https://api.mibar.com";
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "https://bunny-clumsily-spoilage.ngrok-free.dev";
 
 /**
  * Funcion ayudante para hacer peticiones a la API sin repetir codigo.
  * Uso: const datos = await apiFetch("/api/catalogo");
  */
 async function apiFetch(ruta, opciones = {}) {
-    const respuesta = await fetch(API_BASE_URL + ruta, opciones);
+    // Si estamos usando ngrok (plan gratis) para exponer la app a
+    // internet, ngrok intercepta la PRIMERA peticion de cada
+    // dispositivo/navegador con una pagina de advertencia ("You are
+    // about to visit..."). En el navegador de tu computador no lo notas
+    // porque ya la aceptaste una vez y quedo una cookie recordandolo,
+    // pero en un celular (sesion nueva) esa advertencia intercepta
+    // tambien las llamadas fetch() de la app, y como esa pagina no es
+    // JSON, el navegador la bloquea y aparece "Failed to fetch".
+    // Este header le dice a ngrok "saltate la advertencia, deja pasar
+    // la peticion directo". No afecta en nada si NO estas usando ngrok
+    // (por ejemplo accediendo por localhost o por un dominio propio).
+    const encabezados = {
+        "ngrok-skip-browser-warning": "true",
+        ...(opciones.headers || {})
+    };
+
+    const respuesta = await fetch(API_BASE_URL + ruta, { ...opciones, headers: encabezados });
 
     if (!respuesta.ok) {
         // Intentamos leer el mensaje de error que mando el backend

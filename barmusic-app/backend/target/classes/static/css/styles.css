@@ -1,75 +1,90 @@
 /* ============================================================================
    ARCHIVO: styles.css
    ============================================================================
-   AQUI VIVEN TODOS LOS COLORES, FUENTES Y TAMAÑOS DE LA APLICACION.
-   Esta pensado para que un NOVATO pueda personalizar el bar sin tocar el
-   HTML ni el JavaScript. Casi todo se controla desde las "VARIABLES CSS"
-   que estan aqui arriba, en el bloque ":root".
+   ESQUEMA VISUAL GLOBAL DE LA APP (actualizado para que TODAS las pantallas
+   - catalogo, mis solicitudes, notificaciones, panel admin y el escaner QR -
+   compartan el mismo estilo oscuro con acentos rosa/naranja/teal que se
+   estreno en index.html).
+
+   Este archivo es compartido por: cliente-app.html, admin-app.html y
+   cliente-qr.html. El archivo index.css (aparte) SOLO le agrega a
+   index.html el vinilo giratorio y el ecualizador - el resto de colores y
+   componentes (botones, tarjetas, pestañas) viven AQUI, en un solo lugar,
+   para que sea facil mantener todo consistente.
 
    -----------------------------------------------------------------------
-   COMO CAMBIAR EL COLOR PRINCIPAL DEL BAR (por ejemplo a morado neon):
-      Busca la linea "--color-primario: #1a1a1a;" mas abajo y cambia el
-      valor hexadecimal por el que quieras, ej: --color-primario: #6a0dad;
+   COMO CAMBIAR EL COLOR PRINCIPAL DE TODA LA APP:
+      Cambia las variables dentro de ":root" mas abajo. Por ejemplo, para
+      pasar de rosa a azul, cambia --acento-rosa por tu color preferido -
+      se actualiza en botones, pestañas activas, bordes, etc. en TODA la app.
    -----------------------------------------------------------------------
-   COMO CAMBIAR LA IMAGEN DE FONDO DEL LOGIN:
-      Busca la clase ".pantalla-login .logo-bar" en este archivo, o revisa
-      el HTML donde dice <img id="logoBar" src="img/logo-bar.png">. Solo
-      reemplaza el archivo img/logo-bar.png por tu propio logo (mismo
-      nombre) y listo, no hay que tocar nada mas.
+   COMO CAMBIAR LA IMAGEN DE FONDO/LOGO:
+      Este archivo no controla imagenes, solo colores/tamaños. Revisa cada
+      archivo .html (busca <img id="logoBar">).
    ============================================================================ */
 
 :root {
-    /* ---- PALETA DE COLORES: cambia estos valores para re-tematizar TODO el sitio ---- */
-    --color-primario: #1a1a1a;        /* Color principal (barras, botones activos) */
-    --color-secundario: #6b6b6b;      /* Color de botones/pestañas inactivas */
-    --color-acento: #2ecc71;          /* Color de exito / boton check (verde) */
-    --color-peligro: #e74c3c;         /* Color de boton eliminar / cancelar (rojo) */
-    --color-fondo: #f4f4f6;           /* Color de fondo general de la pagina */
-    --color-tarjeta: #ffffff;         /* Color de fondo de las tarjetas/listas */
-    --color-texto: #1a1a1a;           /* Color de texto principal */
-    --color-texto-claro: #ffffff;     /* Color de texto sobre fondos oscuros */
-    --color-borde: #d0d0d5;           /* Color de bordes de inputs y tarjetas */
+    /* ---- PALETA DEL ESQUEMA OSCURO (la misma que index.css) ---- */
+    --fondo-oscuro-1: #1a1030;      /* Morado muy oscuro (esquina del degradado) */
+    --fondo-oscuro-2: #120c22;      /* Casi negro azulado (base del fondo) */
+    --acento-rosa: #ec4899;         /* Rosa/fucsia - acento principal */
+    --acento-naranja: #f59e0b;      /* Naranja - parte del degradado de botones */
+    --acento-teal: #2dd4bf;         /* Verde azulado - exito / QR / pestaña activa alterna */
+    --acento-peligro: #f87171;      /* Rojo suave - eliminar / cancelar / errores */
+    --texto-claro: #f5f3ff;         /* Texto principal sobre fondo oscuro */
+    --texto-tenue: #b9b3d1;         /* Texto secundario / subtitulos */
+    --panel-cristal: rgba(255, 255, 255, 0.06);  /* "Vidrio" translucido de tarjetas */
+    --borde-cristal: rgba(255, 255, 255, 0.14);  /* Borde sutil de tarjetas/inputs */
+
+    /* ---- Alias usados por componentes ya existentes (mantiene el resto
+       del CSS de abajo funcionando igual que antes, solo que ahora
+       apuntan a los nuevos colores oscuros) ---- */
+    --color-fondo: var(--fondo-oscuro-2);
+    --color-tarjeta: var(--panel-cristal);
+    --color-texto: var(--texto-claro);
+    --color-texto-claro: #1a1030;   /* Texto OSCURO usado ENCIMA de botones claros/degradados */
+    --color-borde: var(--borde-cristal);
+    --color-secundario: rgba(255, 255, 255, 0.12);
+    --color-acento: var(--acento-teal);
+    --color-peligro: var(--acento-peligro);
 
     /* ---- TIPOGRAFIA ---- */
     --fuente-principal: 'Segoe UI', Arial, Helvetica, sans-serif;
 
-    /* ---- ESPACIADOS Y BORDES (para mantener todo consistente) ---- */
+    /* ---- ESPACIADOS Y BORDES ---- */
     --radio-borde: 14px;
     --espacio: 16px;
 }
 
-/* Reset basico: quita margenes/paddings raros que trae cada navegador por defecto */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* Fondo oscuro con "manchas" de luz rosa/teal, igual que en index.html,
+   aplicado a TODA la app para que se sienta como una sola experiencia. */
 body {
     font-family: var(--fuente-principal);
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
+    background:
+            radial-gradient(circle at 15% 0%, rgba(236, 72, 153, 0.18), transparent 45%),
+            radial-gradient(circle at 100% 100%, rgba(45, 212, 191, 0.14), transparent 45%),
+            linear-gradient(135deg, var(--fondo-oscuro-1), var(--fondo-oscuro-2));
+    background-attachment: fixed;
+    color: var(--texto-claro);
     min-height: 100vh;
-    /* line-height mejora la legibilidad del texto */
     line-height: 1.4;
 }
 
-/* ============================================================================
-   CONTENEDOR GENERAL - RESPONSIVE
-   ============================================================================
-   Esta clase envuelve el contenido de cada pagina y hace que se vea bien
-   tanto en un celular pequeño como en un monitor grande. La regla clave es
-   "max-width" + "margin: 0 auto" (esto centra el contenido).
-   ============================================================================ */
 .contenedor {
     width: 100%;
-    max-width: 900px;   /* En pantallas grandes, el contenido no se estira infinito */
-    margin: 0 auto;      /* Centra horizontalmente */
+    max-width: 900px;
+    margin: 0 auto;
     padding: var(--espacio);
 }
 
 /* ============================================================================
-   PANTALLA DE LOGIN (usada por cliente-login.html y admin-login.html)
+   PANTALLA TIPO "LOGIN" (usada ahora solo por cliente-qr.html)
    ============================================================================ */
 .pantalla-login {
     min-height: 100vh;
@@ -80,9 +95,11 @@ body {
 }
 
 .tarjeta-login {
-    background: var(--color-tarjeta);
+    background: var(--panel-cristal);
+    border: 1px solid var(--borde-cristal);
+    backdrop-filter: blur(14px);
     border-radius: var(--radio-borde);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
     padding: 32px 28px;
     width: 100%;
     max-width: 420px;
@@ -95,7 +112,7 @@ body {
     text-align: center;
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: var(--color-primario);
+    color: var(--texto-claro);
 }
 
 .logo-bar {
@@ -103,13 +120,13 @@ body {
     max-height: 160px;
     object-fit: cover;
     border-radius: var(--radio-borde);
-    background: #000; /* Igual que el mockup: fondo negro mientras cargas tu logo */
+    background: #000;
     margin-bottom: 10px;
 }
 
 label {
     font-size: 0.9rem;
-    color: var(--color-secundario);
+    color: var(--texto-tenue);
     display: block;
     margin-bottom: 4px;
 }
@@ -120,17 +137,17 @@ input[type="password"],
 textarea {
     width: 100%;
     padding: 12px 14px;
-    border: 1.5px solid var(--color-borde);
+    border: 1.5px solid var(--borde-cristal);
     border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--texto-claro);
     font-size: 1rem;
     font-family: inherit;
     outline: none;
     transition: border-color 0.15s ease-in-out;
 }
-
-input:focus, textarea:focus {
-    border-color: var(--color-primario);
-}
+input::placeholder, textarea::placeholder { color: rgba(245, 243, 255, 0.35); }
+input:focus, textarea:focus { border-color: var(--acento-rosa); }
 
 /* ---- BOTONES ---- */
 .boton {
@@ -142,21 +159,29 @@ input:focus, textarea:focus {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.08s ease-in-out, opacity 0.15s;
+    transition: transform 0.08s ease-in-out, opacity 0.15s, background 0.15s;
 }
 .boton:active { transform: scale(0.97); }
 
-.boton-primario   { background: linear-gradient(135deg, var(--acento-rosa), var(--acento-naranja)); }
-.boton-secundario { background: linear-gradient(135deg, var(--acento-rosasuave), var(--acento-naranjasuave)); }
-.boton-exito      { background: var(--color-acento); color: var(--color-texto-claro); }
-.boton-peligro     { background: var(--color-peligro); color: var(--color-texto-claro); }
-.boton-bloque     { width: 100%; }
+/* Boton principal: degradado rosa -> naranja, igual que "Ingresar" en index */
+.boton-primario {
+    background: linear-gradient(90deg, var(--acento-rosa), var(--acento-naranja));
+    color: var(--color-texto-claro);
+}
+.boton-secundario {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--borde-cristal);
+    color: var(--texto-claro);
+}
+.boton-exito { background: var(--acento-teal); color: #0b2e2a; }
+.boton-peligro { background: var(--acento-peligro); color: #3a0d0d; }
+.boton-bloque { width: 100%; }
 
 .separador-o {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--color-secundario);
+    color: var(--texto-tenue);
     font-weight: 600;
     margin: 6px 0;
 }
@@ -164,26 +189,23 @@ input:focus, textarea:focus {
     content: "";
     flex: 1;
     height: 1px;
-    background: var(--color-borde);
+    background: var(--borde-cristal);
 }
 
 .boton-qr {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #eaeaea;
+    background: rgba(45, 212, 191, 0.08);
     border-radius: 12px;
     padding: 18px;
-    border: 1.5px solid var(--color-borde);
+    border: 1.5px solid var(--acento-teal);
     cursor: pointer;
 }
-.boton-qr svg { width: 48px; height: 48px; }
+.boton-qr svg { width: 48px; height: 48px; fill: var(--acento-teal); }
 
 /* ============================================================================
-   BARRA DE PESTAÑAS SUPERIOR (Solicitar Cancion / Canciones Solicitadas / etc)
-   ============================================================================
-   RESPONSIVE: en pantallas angostas (celular) las pestañas se acomodan en
-   una fila que puede envolver (flex-wrap: wrap) para no desbordar.
+   BARRA DE PESTAÑAS SUPERIOR
    ============================================================================ */
 .barra-pestanas {
     display: flex;
@@ -193,19 +215,21 @@ input:focus, textarea:focus {
 }
 
 .pestana {
-    flex: 1 1 140px;   /* Crece/decrece pero nunca mas angosta que 140px */
+    flex: 1 1 140px;
     text-align: center;
     padding: 14px 10px;
     border-radius: 10px;
-    background: var(--color-secundario);
-    color: var(--color-texto-claro);
+    background: var(--panel-cristal);
+    border: 1px solid var(--borde-cristal);
+    color: var(--texto-tenue);
     cursor: pointer;
     font-weight: 600;
-    border: none;
     font-size: 0.95rem;
 }
 .pestana.activa {
-    background: var(--color-primario);
+    background: linear-gradient(90deg, var(--acento-rosa), var(--acento-naranja));
+    color: var(--color-texto-claro);
+    border-color: transparent;
 }
 
 .boton-campana {
@@ -213,23 +237,26 @@ input:focus, textarea:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-secundario);
+    background: var(--panel-cristal);
+    border: 1px solid var(--borde-cristal);
     border-radius: 10px;
     cursor: pointer;
-    border: none;
     position: relative;
 }
-.boton-campana.activa { background: var(--color-primario); }
-.boton-campana svg { width: 24px; height: 24px; fill: white; }
+.boton-campana.activa {
+    background: linear-gradient(90deg, var(--acento-rosa), var(--acento-naranja));
+    border-color: transparent;
+}
+.boton-campana svg { width: 24px; height: 24px; fill: var(--texto-claro); }
 
-/* Punto rojo que indica notificaciones nuevas sin leer */
 .badge-notificacion {
     position: absolute;
     top: -4px;
     right: -4px;
-    background: var(--color-peligro);
-    color: white;
+    background: var(--acento-peligro);
+    color: #3a0d0d;
     font-size: 0.65rem;
+    font-weight: 700;
     border-radius: 50%;
     width: 18px;
     height: 18px;
@@ -239,7 +266,7 @@ input:focus, textarea:focus {
 }
 
 /* ============================================================================
-   BUSCADOR (Pagina de catalogo)
+   BUSCADOR
    ============================================================================ */
 .caja-busqueda {
     display: flex;
@@ -249,7 +276,7 @@ input:focus, textarea:focus {
 .caja-busqueda input { flex: 1; }
 .boton-buscar {
     flex: 0 0 52px;
-    background: var(--color-primario);
+    background: linear-gradient(90deg, var(--acento-rosa), var(--acento-naranja));
     border-radius: 10px;
     border: none;
     display: flex;
@@ -257,7 +284,7 @@ input:focus, textarea:focus {
     justify-content: center;
     cursor: pointer;
 }
-.boton-buscar svg { width: 22px; height: 22px; fill: white; }
+.boton-buscar svg { width: 22px; height: 22px; fill: var(--color-texto-claro); }
 
 /* ============================================================================
    LISTAS (canciones del catalogo, solicitudes, notificaciones)
@@ -268,8 +295,9 @@ input:focus, textarea:focus {
     display: flex;
     align-items: center;
     gap: 14px;
-    background: var(--color-tarjeta);
-    border: 1.5px solid var(--color-borde);
+    background: var(--panel-cristal);
+    border: 1px solid var(--borde-cristal);
+    backdrop-filter: blur(10px);
     border-radius: 999px;
     padding: 10px 14px;
 }
@@ -278,14 +306,13 @@ input:focus, textarea:focus {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: var(--color-secundario);
+    background: linear-gradient(135deg, var(--acento-rosa), var(--acento-naranja));
     flex-shrink: 0;
 }
 
 .info-cancion { flex: 1; min-width: 0; }
-.info-cancion .titulo { font-weight: 600; }
-.info-cancion .subtitulo { font-size: 0.85rem; color: var(--color-secundario); }
-/* text-overflow: evita que nombres largos rompan el diseño en celulares */
+.info-cancion .titulo { font-weight: 600; color: var(--texto-claro); }
+.info-cancion .subtitulo { font-size: 0.85rem; color: var(--texto-tenue); }
 .info-cancion .titulo, .info-cancion .subtitulo {
     white-space: nowrap;
     overflow: hidden;
@@ -304,10 +331,9 @@ input:focus, textarea:focus {
     justify-content: center;
     color: white;
 }
-.boton-icono.check { background: var(--color-primario); }
-.boton-icono.equis { background: var(--color-primario); }
+.boton-icono.check { background: var(--acento-teal); }
+.boton-icono.equis { background: var(--acento-peligro); }
 
-/* Fila extra de acciones para el panel de administrador (Completar / Eliminar) */
 .acciones-admin { display: flex; gap: 8px; flex-wrap: wrap; }
 .acciones-admin .boton { padding: 10px 14px; font-size: 0.85rem; }
 
@@ -315,12 +341,13 @@ input:focus, textarea:focus {
    TARJETAS DE NOTIFICACION
    ============================================================================ */
 .tarjeta-notificacion {
-    background: var(--color-tarjeta);
-    border: 1.5px solid var(--color-borde);
+    background: var(--panel-cristal);
+    border: 1px solid var(--borde-cristal);
+    backdrop-filter: blur(10px);
     border-radius: 12px;
     padding: 16px;
 }
-.tarjeta-notificacion h3 { margin-bottom: 6px; font-size: 1rem; }
+.tarjeta-notificacion h3 { margin-bottom: 6px; font-size: 1rem; color: var(--texto-claro); }
 .tarjeta-notificacion img {
     width: 100%;
     border-radius: 10px;
@@ -329,7 +356,7 @@ input:focus, textarea:focus {
 }
 .tarjeta-notificacion .fecha {
     font-size: 0.75rem;
-    color: var(--color-secundario);
+    color: var(--texto-tenue);
     margin-top: 8px;
 }
 
@@ -342,16 +369,12 @@ input:focus, textarea:focus {
     margin-bottom: var(--espacio);
     font-size: 0.9rem;
 }
-.mensaje.error  { background: #fdecea; color: #b3261e; border: 1px solid #f5c2c0; }
-.mensaje.exito  { background: #e8f8ee; color: #1e7e34; border: 1px solid #b9e8c9; }
-.mensaje.info   { background: #eef3fb; color: #1c4e91; border: 1px solid #c3d7f2; }
+.mensaje.error { background: rgba(248, 113, 113, 0.14); color: #fca5a5; border: 1px solid rgba(248, 113, 113, 0.35); }
+.mensaje.exito { background: rgba(45, 212, 191, 0.14);  color: #99f6e4; border: 1px solid rgba(45, 212, 191, 0.35); }
+.mensaje.info  { background: rgba(236, 72, 153, 0.12);  color: #fbcfe8; border: 1px solid rgba(236, 72, 153, 0.3); }
 
 /* ============================================================================
-   RESPONSIVE: ajustes especificos para pantallas de celular
-   ============================================================================
-   Todo lo de arriba YA es responsive gracias a flexbox y max-width, pero
-   aqui afinamos detalles para pantallas muy angostas (menos de 480px, el
-   tamaño tipico de un celular en vertical).
+   RESPONSIVE
    ============================================================================ */
 @media (max-width: 480px) {
     .tarjeta-login { padding: 24px 18px; }
@@ -360,7 +383,6 @@ input:focus, textarea:focus {
     .acciones-admin .boton { width: 100%; }
 }
 
-/* Pantallas grandes (PC/monitores anchos): un poco mas de aire */
 @media (min-width: 1024px) {
     .contenedor { padding: 32px var(--espacio); }
 }
