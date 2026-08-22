@@ -347,6 +347,15 @@ input:focus, textarea:focus { border-color: var(--acento-rosa); }
     border-radius: 12px;
     padding: 16px;
 }
+/* Encabezado: el contenido (texto/imagen/fecha) a la izquierda y el
+   boton de basurita a la derecha, alineados arriba */
+.tarjeta-notificacion-encabezado {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+.tarjeta-notificacion-contenido { flex: 1; min-width: 0; }
 .tarjeta-notificacion h3 { margin-bottom: 6px; font-size: 1rem; color: var(--texto-claro); }
 .tarjeta-notificacion img {
     width: 100%;
@@ -358,6 +367,12 @@ input:focus, textarea:focus { border-color: var(--acento-rosa); }
     font-size: 0.75rem;
     color: var(--texto-tenue);
     margin-top: 8px;
+}
+/* Boton de basurita: circular, rojo suave, se achica un poco al presionar
+   (la animacion de "achicar" ya viene heredada de .boton-icono) */
+.boton-icono.basurita {
+    background: var(--acento-peligro);
+    flex-shrink: 0;
 }
 
 /* ============================================================================
