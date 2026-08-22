@@ -14,6 +14,7 @@
 // URL real de tu servidor, por ejemplo:
 //     const API_BASE_URL = "https://api.mibar.com";
 const API_BASE_URL = "https://bunny-clumsily-spoilage.ngrok-free.dev";
+// const API_BASE_URL = "http://localhost:8080/";
 
 /**
  * Funcion ayudante para hacer peticiones a la API sin repetir codigo.

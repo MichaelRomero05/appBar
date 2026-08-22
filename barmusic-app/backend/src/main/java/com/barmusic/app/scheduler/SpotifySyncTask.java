@@ -31,7 +31,7 @@ public class SpotifySyncTask {
     @Autowired
     private SpotifyService spotifyService;
 
-    @Scheduled(fixedRate = 300000) // Se ejecuta cada 5 minutos desde que arranca el servidor
+    @Scheduled(fixedRate = 30000) // Se ejecuta cada 5 minutos desde que arranca el servidor
     public void ejecutarSincronizacionAutomatica() {
         System.out.println("[SpotifySync] Iniciando sincronizacion automatica con Spotify...");
         spotifyService.sincronizarCatalogoDesdeSpotify();
